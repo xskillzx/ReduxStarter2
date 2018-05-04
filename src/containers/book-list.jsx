@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 
-import { selectBook } from '../actions';
+import selectBook from '../actions';
 
 class BookList extends Component {
   renderList() {
     return this.props.books.map(book => (
       <li
+        onClick={() => this.props.selectBook(book)}
         key={book.title}
         className="list-group-item"
       >
@@ -42,11 +43,13 @@ function mapDispatchToProps(dispatch) {
 }
 
 BookList.propTypes = {
-  books: PropTypes.arrayOf(PropTypes.string),
+  books: PropTypes.arrayOf(PropTypes.object),
+  selectBook: PropTypes.func,
 };
 
 BookList.defaultProps = {
   books: [],
+  selectBook: () => {},
 };
 
 // Promote BookList from a component to a container - it needs to know
